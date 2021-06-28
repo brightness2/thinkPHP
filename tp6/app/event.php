@@ -1,8 +1,8 @@
 <?php
 // 事件定义文件
+
 return [
-    'bind'      => [
-    ],
+    'bind'      => [],
 
     'listen'    => [
         'AppInit'  => [],
@@ -10,8 +10,10 @@ return [
         'HttpEnd'  => [],
         'LogLevel' => [],
         'LogWrite' => [],
+        'Test' => [\app\listener\Test::class], //可多个
     ],
 
     'subscribe' => [
+        'UserSub' => \app\subscribe\UserSub::class
     ],
 ];
