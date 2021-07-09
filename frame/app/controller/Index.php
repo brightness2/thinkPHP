@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\BaseController;
+use app\lib\domain\JWT;
 use app\lib\domain\Rbac as RbacDomain;
 use app\lib\model\Sequence;
 use app\lib\exception\ZException;
@@ -65,12 +66,28 @@ class Index extends BaseController
     public function test4()
     {
         $domain =  new RbacDomain;
-        $data = [
-            ['role_id' => 1, 'per_id' => 4],
-            ['role_id' => 1, 'per_id' => 5],
-            ['role_id' => 1, 'per_id' => 6],
-        ];
         $res = $domain->checkUserPermission(1, 'index', 'test2');
         return success($res);
+    }
+
+    /**
+     * 获取 token
+     */
+    public function test5()
+    {
+        $data = JWT::signToken(1);
+
+        return success($data);
+    }
+
+    /**
+     * 校验 token
+     */
+    public function test6()
+    {
+        $token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJAQCMjIiwiYXVkIjoiIiwiaWF0IjoxNjI1NzQzNDEzLCJuYmYiOjE2MjU3NDM0MTYsImV4cCI6MTYyNTc0MzYxMywicmVmcmVzaCI6MTYyNTc0MzU1MywiZGF0YSI6eyJ1aWQiOjF9fQ.aKRkfTi_dW8zFwYBW93QWieJnBlyd3ZYOWjXNPY-EfM";
+        $data = JWT::checkToken($token);
+
+        return success($data);
     }
 }

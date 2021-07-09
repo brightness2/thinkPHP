@@ -42,4 +42,8 @@ return [
     'default_jsonp_handler' => 'jsonpReturn',
     // 默认JSONP处理方法
     'var_jsonp_handler'     => 'callback',
+    //全局路由中间件
+    'middleware' => [
+        'checkToken',
+    ]
 ];

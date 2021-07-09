@@ -20,3 +20,17 @@ app/model/UserRole.php,
 app/model/RolePermission.php
 
 3、实现RBAC常用操作,app/lib/domain/Rbac.php
+
+# token 令牌
+1、命令行执行 composer require firebase/php-jwt
+2、安装的类在vendor/firebase/php-jwt/JWT.php
+3、实现JWT使用类,app/lib/domain/JWT.php,包含签名方法,校验方法;达到刷新时间,重新生成token用于前端刷新token
+4、token的校验一般用在路由中间件
+4.1 config/middleware.php增加中间件别名
+4.2 config/route.php文件增加，
+    'middleware' => [
+        'checkToken',
+    ]
+
+
+
