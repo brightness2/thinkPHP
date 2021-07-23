@@ -82,7 +82,7 @@ class ExceptionHandle extends Handle
                     return parent::render($request, $e);
                 }
                 break;
-            case 'default':
+            default:
                 // 其他错误交给系统处理
                 return parent::render($request, $e);
                 break;
