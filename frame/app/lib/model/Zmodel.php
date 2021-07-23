@@ -17,6 +17,22 @@ abstract class Zmodel extends Model
     protected $SeqPkPrefix = 'S'; //计数主键前缀
 
     /**
+     * 搜索列表
+     */
+    static public function getList($search = [])
+    {
+        $arr = [];
+        if (is_array($search)) {
+            foreach ($search as $key => $value) {
+                if ($value !== null and $value !== '') {
+                    $arr[$key] = $value;
+                }
+            }
+        }
+        $keys = array_keys($arr);
+        return self::withSearch($keys, $arr)->select();
+    }
+    /**
      * 新增前事件
      */
     public static  function onBeforeInsert($row)
@@ -27,6 +43,14 @@ abstract class Zmodel extends Model
             $id = sprintf('%04d', $id);
             $pk = $row->pk;
             $row->$pk = $row->SeqPkPrefix . $id;
+        }
+    }
+
+    /*****************搜索器************************* */
+    public function searchPageAttr($query, $value, $data)
+    {
+        if (is_array($value) and count($value) == 2) {
+            $query->page((int)$value[1], (int)$value[0]);
         }
     }
 }
