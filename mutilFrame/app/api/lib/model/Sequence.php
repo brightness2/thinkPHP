@@ -35,10 +35,9 @@ class Sequence extends Model
             }
         }
 
-        $seq_no = $row->seq_no;
-        $row->seq_no = $seq_no + 1;
+        $row->seq_no = $row->seq_no + 1;
         $row->seq_last_update =  date('Y-m-d H:i:s');
         $row->save();
-        return $seq_no;
+        return $row->getData('seq_no');
     }
 }
