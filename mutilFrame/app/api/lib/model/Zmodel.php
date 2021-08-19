@@ -21,6 +21,7 @@ abstract class Zmodel extends Model
      */
     static public function getList($search = [])
     {
+
         $arr = [];
         if (is_array($search)) {
             foreach ($search as $key => $value) {
@@ -30,9 +31,30 @@ abstract class Zmodel extends Model
             }
         }
         $keys = array_keys($arr);
-        return self::withSearch($keys, $arr)->select();
+        try {
+            $rows = self::withSearch($keys, $arr)->select();
+        } catch (\Exception $e) {
+            $rows = self::select([0]);
+        }
+        return $rows;
     }
 
+    /**
+     * 批量修改某个字段
+     */
+    public function changeField($keys, $field, $value)
+    {
+        if (!is_array($keys)) {
+            if (is_string($keys)) {
+                $keys = explode(',', $keys);
+            } else {
+                throw new ZException('keys参数不存在或参数错误');
+            }
+        }
+
+        return $this->whereIn($this->getPk(), $keys)->update([$field => $value]);
+    }
+    
     /**
      * 新增前事件
      */
@@ -47,11 +69,5 @@ abstract class Zmodel extends Model
         }
     }
 
-    /*****************搜索器************************* */
-    public function searchPageAttr($query, $value, $data)
-    {
-        if (is_array($value) and count($value) == 2) {
-            $query->page((int)$value[1], (int)$value[0]);
-        }
-    }
+   
 }
