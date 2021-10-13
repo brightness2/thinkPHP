@@ -1,0 +1,44 @@
+body{
+    min-width: 1000px;
+}
+.login{
+    position: relative;
+    .bg-img{
+        position: absolute;
+       width: 100vw;
+       height: 100vh;
+       object-fit: cover;
+    }
+
+    .shade{
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .5);
+
+        .form-box{
+            width: 40%;
+            min-width: 600px;
+            padding: 20px;
+            margin: 100px auto;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 4px;
+            .title{
+                margin: 10px;
+                text-align: center;
+            }
+            .login-form{
+                width: 60%;
+                min-width: 300px;
+                margin-left: 7%;
+                .layui-btn{
+                    display: block;
+                    width: 200px;
+                    margin-left: 36%;
+                }
+            }
+            
+        }
+    }
+} 

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-form layuimini-form" lay-filter='commonForm'>
+        {block name='form-item'}
+
+        {/block}
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+    {include file='common/config'/}
+    <script>
+        var requestUrl = '';//新增请求url
+        var updateRequestUrl = '';//更新请求url
+        var successCallBack = null;//提交请求后的回调
+        var loadFormDataPM = null;//更新时加载表单数据,返回的结果必须是promise
+    </script>
+
+    {block name='js'}
+    <script>
+        // requestUrl = '';
+        // updateRequestUrl = '';
+        // loadFormData = (param)=>{};
+        // successCallBack = (iframeIndex, res) => {}
+    </script>
+    {/block}
+    <!-- ******************************************* -->
+    <script>
+        //对外方法，跨ifram调用
+        function LoadData(param) {
+            if (param.event === "add") {
+
+            } else {
+                requestUrl = updateRequestUrl;
+            }
+
+            loadFormDataPM && loadFormDataPM(param).then(res => {
+                layui.form.val('commonForm', res.data);
+            });
+        }
+
+        layui.use(['form', 'api'], function () {
+            var form = layui.form,
+                layer = layui.layer,
+                api = layui.api;
+
+            //监听提交
+            form.on('submit(saveBtn)', function (data) {
+
+                api.request(requestUrl, data.field, (res) => {
+                    var iframeIndex = parent.layer.getFrameIndex(window.name);
+                    successCallBack && successCallBack(iframeIndex, res);
+                    parent.layer.close(iframeIndex);
+                })
+
+                return false;
+            });
+
+        });
+    </script>
+</body>
+
+</html>

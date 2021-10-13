@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+    <link rel="stylesheet" href="__CSS__/login.css">
+
+</head>
+
+
+<body>
+    <div class="login">
+        <img class="bg-img" src="__IMG__/login.jpg" alt="">
+        <div class="shade">
+            <div class="form-box">
+                <h1 class="title">进销存系统登录</h1>
+                <form class="login-form layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">账号：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" required lay-verify="required" autocomplete="off" placeholder="请输入账号"
+                                class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码：</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="pass" lay-verify="required" autocomplete="off" placeholder="请输入密码"
+                                class="layui-input">
+                        </div>
+                    </div>
+                     
+                    <button class="layui-btn" lay-submit  lay-filter="loginSubmit">登录</button>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    {include file="common/config" /} 
+    <script src="__JS__/login/index.js"></script>
+</body>
+
+</html>

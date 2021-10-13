@@ -1,0 +1,35 @@
+{extend name='common/form'/}
+
+{block name='form-item'}
+<input type="hidden" name="id" class="layui-input">
+<div class="layui-form-item">
+    <label class="layui-form-label required">角色名称</label>
+    <div class="layui-input-block">
+        <input type="text" name="name" lay-verify="required" lay-reqtext="用户名不能为空" placeholder="请输入角色名称" value=""
+            class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">备注信息</label>
+    <div class="layui-input-block">
+        <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+    </div>
+</div>
+{/block}
+
+{block name='js'}
+<script>
+    requestUrl = 'domain.role/add';
+    updateRequestUrl = 'domain.role/edit';
+    loadFormDataPM = (param) => {
+        return new Promise((resolve, reject) => {
+            layui.api.request('domain.baseInfo/get', { id: param.id, model: 'app\\model\\Role' }, (res) => {
+                if (res) {
+                    return resolve(res);
+                }
+            })
+        })
+
+    };
+</script>
+{/block}
