@@ -1,0 +1,86 @@
+{extend name='common/form'/}
+
+{block name='form-item'}
+<input type="hidden" name="id" class="layui-input">
+<div class="layui-form-item">
+    <label class="layui-form-label required">商品类别</label>
+
+    <div class="layui-input-block">
+        <select name="goods_cate_id" lay-filter="category" lay-verify="required" lay-reqtext="请选择商品类别">
+            <option value=""></option>
+            {foreach $categories as $vo}
+            <option value="{$vo['id']}">{$vo['name']}</option>
+            {/foreach}
+        </select>
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label required">商品编号</label>
+    <div class="layui-input-block">
+        <input type="text" name="code" lay-verify="required" lay-reqtext="商品编号不能为空" placeholder="请输入商品编号" value=""
+            class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label required">商品名称</label>
+    <div class="layui-input-block">
+        <input type="text" name="name" lay-verify="required" lay-reqtext="商品名称不能为空" placeholder="请输入商品名称" value=""
+            class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+
+    <label class="layui-form-label required">商品型号</label>
+    <div class="layui-input-inline">
+        <input name="model" class="layui-input" lay-verify="required">
+    </div>
+
+    <label class="layui-form-label">采购价</label>
+    <div class="layui-input-inline">
+        <input type="number" name="purchasing_price" placeholder="￥" autocomplete="off" class="layui-input">
+    </div>
+
+</div>
+<div class="layui-form-item">
+
+    <label class="layui-form-label">销售价</label>
+    <div class="layui-input-inline">
+        <input type="number" name="selling_price" placeholder="￥" autocomplete="off" class="layui-input">
+    </div>
+
+    <label class="layui-form-label">库存下限</label>
+    <div class="layui-input-inline">
+        <input type="number" name="min_num" autocomplete="off" class="layui-input">
+    </div>
+
+</div>
+<div class="layui-form-item">
+
+    <label class="layui-form-label required">商品单位</label>
+    <div class="layui-input-inline">
+        <select name="unit" lay-filter="unit" lay-verify="required">
+            <option value=""></option>
+            {foreach $unites as $vo}
+            <option value="{$vo['name']}">{$vo['name']}</option>
+            {/foreach}
+        </select>
+    </div>
+
+    <label class="layui-form-label">生产厂商</label>
+    <div class="layui-input-inline">
+        <input type="text" name="producer" autocomplete="off" class="layui-input">
+    </div>
+
+</div>
+
+<div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">备注信息</label>
+    <div class="layui-input-block">
+        <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+    </div>
+</div>
+{/block}
+
+{block name='js'}
+<script src="__JS__/baseinfo/goodsForm.js"></script>
+{/block}

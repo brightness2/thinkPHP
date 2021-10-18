@@ -1,0 +1,19 @@
+{extend name='common/table'/}
+{block name='title'}
+商品单位管理
+{/block}
+
+{block name='search'}
+<div class="layui-inline">
+    <label class="layui-form-label">单位名称</label>
+    <div class="layui-input-inline">
+        <input type="text" name="unit_name" autocomplete="off" class="layui-input">
+    </div>
+</div>
+{/block}
+{block name='toolbar'}
+<button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
+{/block}
+{block name='js'}
+<script src="__JS__/baseinfo/goodsUnit.js"></script>
+{/block}

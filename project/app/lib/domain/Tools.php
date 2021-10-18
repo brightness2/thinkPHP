@@ -23,6 +23,7 @@ class Tools
 
         // 创建Tree
         $tree = array();
+        // return $list;
         if (is_array($list)) {
             // 创建基于主键的数组引用
             $refer = array();

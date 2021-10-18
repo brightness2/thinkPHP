@@ -1,0 +1,17 @@
+{extend name='common/table'/}
+{block name='title'}
+供应商管理
+{/block}
+
+{block name='search'}
+<div class="layui-inline">
+    <label class="layui-form-label">供应商名称</label>
+    <div class="layui-input-inline">
+        <input type="text" name="supplier_name" autocomplete="off" class="layui-input">
+    </div>
+</div>
+{/block}
+
+{block name='js'}
+<script src="__JS__/baseinfo/supplier.js"></script>
+{/block}

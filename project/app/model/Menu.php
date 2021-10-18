@@ -30,7 +30,7 @@ class Menu extends Zmodel
             $data['type'] = 2;
         }
         //如果是菜单或按钮，访问操作不能为空
-        if ($data['type'] > 0 and empty($data['action'])) {
+        if ($data['type'] > 0 and empty($data['href'])) {
             throw new ZException("访问操作不能为空");
         }
         return $this->create($data)->getKey();
@@ -53,7 +53,7 @@ class Menu extends Zmodel
             throw new ZException("根目录不可修改");
         }
         //如果是菜单或按钮，访问操作不能为空
-        if ($row['type'] > 0 and empty($data['action'])) {
+        if ($row['type'] > 0 and empty($data['href'])) {
             throw new ZException("访问操作不能为空");
         }
         return $row->save($data);

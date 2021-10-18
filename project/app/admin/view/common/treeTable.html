@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {block name='title'}
+        树表格
+        {/block}
+    </title>
+</head>
+
+<body>
+    <div>
+        <div class="layui-btn-group">
+            {block name='btn-group'}
+            <button class="layui-btn" id="btn-expand">全部展开</button>
+            <button class="layui-btn layui-btn-normal" id="btn-fold">全部折叠</button>
+            {/block}
+
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container">
+                    {block name='toolbar'}
+                    
+                    {/block}
+                   
+                   
+                </div>
+            </script>
+        </div>
+
+        <table id="munu-table" class="layui-table" lay-filter="munu-table"></table>
+    </div>
+    <!-- 操作列 -->
+    <script type="text/html" id="auth-state">
+        {block name='currentTableBar'}
+            <a class="layui-btn  layui-btn-xs" lay-event="add">添加子项</a>
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>  
+        {/block}
+        {block name='other-currentTableBar'}
+                
+        {/block}
+    </script>
+
+    {include file='common/config'/}
+</body>
+<script>
+    var treetableConfig = {};//表格配置
+    var onDelete = null;//行删除回调
+    var addClickConfig = {};//添加按钮配置
+    var editClickConfig = {};//编辑按钮配置
+    var onToolBar = null;//表格ToolBar工具栏操作回调
+</script>
+{block name='js'}
+
+{/block}
+<script>
+
+    let treetableDefaultConfig = {
+        elem: '#munu-table',
+        url: '',
+        toolbar: '#toolbarDemo',
+        treeColIndex: 1,
+        treeSpid: 0,
+        treeIdName: 'id',
+        treePidName: 'pid',
+        page: false,
+        cols: [],
+        done: function () {
+            layer.closeAll('loading');
+        }
+    }
+
+    treetableConfig = Object.assign(treetableDefaultConfig, treetableConfig);
+    layui.use(['jquery', 'table', 'treetable', 'api'], function () {
+        var $ = layui.jquery, table = layui.table, treetable = layui.treetable, api = layui.api;
+        //表格重载
+        function tableReload() {
+            location.reload();
+        }
+
+        // 渲染表格
+        layer.load(2);
+        treetable.render(treetableConfig);
+
+        $('#btn-expand').click(function () {
+            treetable.expandAll('#munu-table');
+        });
+
+        $('#btn-fold').click(function () {
+            treetable.foldAll('#munu-table');
+        });
+
+        //添加工具条
+        table.on('toolbar(munu-table)', function (obj) {
+            onToolBar && onToolBar(obj);
+        });
+
+        //监听行工具条
+        table.on('tool(munu-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'del') {
+                layer.confirm('真的删除行么', { icon: 3 }, function (index) {
+                    onDelete && onDelete(obj);
+                    layer.close(index);
+                });
+            } else if (layEvent === 'edit') {
+                let index = layer.open({
+                    title: editClickConfig.title || "修改表格",//
+                    type: editClickConfig.type || 2,
+                    shade: editClickConfig.shade || 0.2,
+                    maxmin: editClickConfig.maxmin || true,
+                    shadeClose: editClickConfig.shadeClose || false,
+                    area: editClickConfig.area || ['60%', '70%'],
+                    content: editClickConfig.page || '',
+                    success: (layero, index) => {
+                        var body = layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象
+                        iframeWin.LoadData && iframeWin.LoadData(obj);//调用iframe页的窗口对象中的方法
+                    },
+                    end: () => {
+                        tableReload();
+                    }
+                });
+            } else if (layEvent === 'add') {
+                let index = layer.open({
+                    title: addClickConfig.title || "添加数据",//
+                    type: addClickConfig.type || 2,
+                    shade: addClickConfig.shade || 0.2,
+                    maxmin: addClickConfig.maxmin || true,
+                    shadeClose: addClickConfig.shadeClose || false,
+                    area: addClickConfig.area || ['60%', '70%'],
+                    content: addClickConfig.page || '',
+                    success: (layero, index) => {
+                        var body = layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象
+                        iframeWin.LoadData && iframeWin.LoadData(obj);//调用iframe页的窗口对象中的方法
+                    },
+                    end: () => {
+                        tableReload();
+                    }
+                });
+            }
+        });
+    })
+</script>
+
+</html>

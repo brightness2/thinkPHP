@@ -1,0 +1,40 @@
+{extend name='common/form'/}
+
+{block name='form-item'}
+<input type="hidden" name="id" class="layui-input">
+<div class="layui-form-item">
+    <label class="layui-form-label required">供应商名称</label>
+    <div class="layui-input-block">
+        <input type="text" name="name" lay-verify="required" lay-reqtext="供应商名称不能为空" placeholder="请输入供应商名称" value=""
+            class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">地址</label>
+    <div class="layui-input-block">
+        <input type="text" name="address" placeholder="请输入供应商地址" value="" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">联系人</label>
+    <div class="layui-input-block">
+        <input type="text" name="contact" placeholder="请输入联系人" value="" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">联系电话</label>
+    <div class="layui-input-block">
+        <input type="text" name="phone" placeholder="请输入联系电话" value="" class="layui-input">
+    </div>
+</div>
+<div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">备注信息</label>
+    <div class="layui-input-block">
+        <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+    </div>
+</div>
+{/block}
+
+{block name='js'}
+<script src="__JS__/baseinfo/supplierForm.js"></script>
+{/block}

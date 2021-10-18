@@ -4,8 +4,9 @@ namespace app\admin\controller\domain;
 
 use app\model\User;
 use app\BaseController;
+use app\lib\domain\Tools;
 use app\lib\exception\ZException;
-
+use app\model\Menu;
 
 class Account extends BaseController
 {
@@ -36,6 +37,54 @@ class Account extends BaseController
 
     public function getMenu()
     {
+        $menu = Menu::where('type', '<', 2)->select();
+
+        $menu = Tools::list_to_tree($menu->toArray(), 'id', 'pid', 'child', 0);
+        /*
+$a =   [
+    [
+        'title' => '常规管理',
+        'icon' => 'fa fa-address-book',
+        'href' => '',
+        'target' => '_self',
+        'child' => [
+            [
+                'title' => '主页模板',
+                'href' => 'home/test',
+                'icon' => 'fa fa-home',
+                'target' => '_self',
+            ],
+            [
+                'title' => '系统设置',
+                'href' => '',
+                'icon' => 'fa fa-home',
+                'target' => '_self',
+                'child' => [
+                    [
+                        'title' => '用户管理',
+                        'href' => 'system/user',
+                        'icon' => '',
+                        'target' => '_self',
+                    ],
+                    [
+                        'title' => '角色维护',
+                        'href' => 'system/role',
+                        'icon' => '',
+                        'target' => '_self',
+                    ],
+                    [
+                        'title' => '菜单管理',
+                        'href' => 'system/menu',
+                        'icon' => '',
+                        'target' => '_self',
+                    ],
+                ]
+            ]
+
+        ]
+    ],
+
+];*/
         $data = [
             'homeInfo' => [
                 'title' => '首页',
@@ -46,50 +95,7 @@ class Account extends BaseController
                 'image' => '/public/static/layuimini/images/logo.png',
                 'href' => ''
             ],
-            'menuInfo' => [
-                [
-                    'title' => '常规管理',
-                    'icon' => 'fa fa-address-book',
-                    'href' => '',
-                    'target' => '_self',
-                    'child' => [
-                        [
-                            'title' => '主页模板',
-                            'href' => 'home/test',
-                            'icon' => 'fa fa-home',
-                            'target' => '_self',
-                        ],
-                        [
-                            'title' => '系统设置',
-                            'href' => '',
-                            'icon' => 'fa fa-home',
-                            'target' => '_self',
-                            'child' => [
-                                [
-                                    'title' => '用户管理',
-                                    'href' => 'system/user',
-                                    'icon' => '',
-                                    'target' => '_self',
-                                ],
-                                [
-                                    'title' => '角色维护',
-                                    'href' => 'system/role',
-                                    'icon' => '',
-                                    'target' => '_self',
-                                ],
-                                [
-                                    'title' => '菜单管理',
-                                    'href' => 'system/menu',
-                                    'icon' => '',
-                                    'target' => '_self',
-                                ],
-                            ]
-                        ]
-
-                    ]
-                ],
-
-            ]
+            'menuInfo' => $menu
 
         ];
         return success($data);

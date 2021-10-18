@@ -1,0 +1,16 @@
+{extend name='common/form'/}
+
+{block name='form-item'}
+<input type="hidden" name="id" class="layui-input">
+<div class="layui-form-item">
+    <label class="layui-form-label required">单位名称</label>
+    <div class="layui-input-block">
+        <input type="text" name="name" lay-verify="required" lay-reqtext="分类名称不能为空" placeholder="请输入分类名称" value=""
+            class="layui-input">
+    </div>
+</div>
+{/block}
+
+{block name='js'}
+<script src="__JS__/baseinfo/goodsUnitForm.js"></script>
+{/block}
