@@ -27,25 +27,17 @@ class GetChildren extends Zmodel{
       $children = $children->toArray();
       if(count($children)>0){
         $this->count++; 
-        $this->temp[] = $children;
         foreach($children as $child){
+            $this->temp[] = $child;
             $this->getChildren($child[$idField]);
         }
       }
       $this->count--; 
       if($this->count <= 0){//递归返回达到第一层
         //查询到的数据降维
-        $data = [];
-        $data[] = $row;//不要忘了加上自己 categoryId
-        $all = $this->temp;
-        $this->temp = [];//清除临时存储
-        $this->count = 1;
-        foreach($all as $arr){
-            foreach($arr as $item){
-                $data[] = $item;
-            }
-        }
-        return $data;
+        $this->temp[] = $row;
+        return $this->temp;
+
       }
 
    }
