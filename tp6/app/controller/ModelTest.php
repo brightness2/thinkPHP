@@ -251,4 +251,30 @@ class ModelTest extends BaseController
 
         return json($users);
     }
+
+    /**
+     * or 查询
+     * 通过闭包实现
+     * @return void
+     */
+    public function test10()
+    {
+        $where = [
+            'admin_id' => ['in',[5,6]],
+            'id'=> ['in',[4,3]],
+        ];
+        $whereOr = [
+            'stf_id'=>'S0007',
+            'id'=> ['in',[4,3]],
+        ];
+        $users = UserModel::where(function($query) use($where){
+            $query->where($where);
+        })
+        ->whereOr(function ($query) use($whereOr)
+        {
+            $query->where($whereOr);
+        })
+        ->select();
+
+    }
 }
